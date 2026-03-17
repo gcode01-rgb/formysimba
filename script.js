@@ -40,7 +40,7 @@ noBtn.addEventListener('mouseover', () => {
 // 3. ИӘ БАСЫЛҒАНДА: СҮЮ БАТЫРМАСЫНА ӨТУ
 yesBtn.addEventListener('click', () => {
     sticker.src = "https://media.tenor.com/r0VCmLiA3mEAAAAm/sseeyall-bubu-dudu.webp";
-    title.innerText = "Енді мені сүй! 🥰";
+    title.innerText = "менде жақсы көрем! 🥰";
     
     container.innerHTML = `
         <button id="kissBtn" style="background-color: #fd79a8; color: white; padding: 20px 40px; font-size: 22px;">
