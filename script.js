@@ -40,33 +40,36 @@ noBtn.addEventListener('mouseover', () => {
 // 3. ИӘ БАСЫЛҒАНДА: СҮЮ БАТЫРМАСЫНА ӨТУ
 yesBtn.addEventListener('click', () => {
     sticker.src = "https://media.tenor.com/r0VCmLiA3mEAAAAm/sseeyall-bubu-dudu.webp";
-    title.innerText = "менде жақсы көрем! 🥰";
+    title.innerText = "мен де жақсы көрем! 🥰";
     
+    // БАТЫРМАЛАРДЫ АУЫСТЫРУ
     container.innerHTML = `
-        <button id="kissBtn" style="background-color: #fd79a8; color: white; padding: 20px 40px; font-size: 22px;">
+        <button id="kissBtn" style="background-color: #fd79a8; color: white; padding: 20px 40px; font-size: 22px; cursor: pointer; border-radius: 12px; border: none;">
              сүю 💋
         </button>
     `;
 
     const kissBtn = document.getElementById('kissBtn');
     
-    // ОСЫ ЖЕРДЕГІ ФУНКЦИЯНЫ ТЕКСЕР:
+    // СҮЮ БАТЫРМАСЫН БАСҚАНДА:
     kissBtn.addEventListener('click', () => {
-        createKissEffect(); // Анимацияны қосу
+        createKissEffect(); // Анимация
+        
+        // ХАБАРЛАМА ЖІБЕРУДІ ОСЫ ЖЕРДЕ ШАҚЫРАМЫЗ
+        sendNotification(); 
 
-        // Стикер мен Мәтінді ауыстыру логикасы
+        // СТИКЕР МЕН МӘТІНДІ АУЫСТЫРУ
         sticker.src = kissSteps[kissIndex].img;
         title.innerText = kissSteps[kissIndex].text;
 
-        // Келесі қадамға өту
         kissIndex++;
         if (kissIndex >= kissSteps.length) {
-            kissIndex = 0; // Тізім бітсе, басына қайта келеді
+            kissIndex = 0;
         }
     });
 });
 
-// 4. СҮЮ АНИМАЦИЯСЫ (Сенің нұсқаң)
+// 4. СҮЮ АНИМАЦИЯСЫ
 function createKissEffect() {
     const overlay = document.createElement('div');
     overlay.className = 'overlay';
@@ -79,6 +82,7 @@ function createKissEffect() {
     document.body.appendChild(bigKiss);
     bigKiss.style.animation = 'heartPulse 1.5s ease-out forwards';
 
+    // Ұсақ жүрекшелер
     for (let i = 0; i < 15; i++) {
         const miniHeart = document.createElement('div');
         miniHeart.style.position = 'fixed';
@@ -108,10 +112,15 @@ function createKissEffect() {
         }, 500);
     }, 1500);
 }
+
+// 5. ТЕЛЕГРАМҒА ХАБАРЛАМА ЖІБЕРУ
 function sendNotification() {
-    const token = "8632015616:AAFSbYJClMyktInbsI5rDZekv1ezC-sQ5ik"; // Осы жерге BotFather берген токенді қой
-    const chat_id = "8130655129"; // Осы жерге өз ID-іңді қой
-    const message = "Сүйіктім 'Беттен сүю' батырмасын басты! 😍💋";
+    const token = "8632015616:AAFSbYJClMyktInbsI5rDZekv1ezC-sQ5ik";
+    const chat_id = "8130655129";
+    
+    // Уақытты қосу арқылы қашан басылғанын көресің
+    const now = new Date().toLocaleTimeString(); 
+    const message = `Сүйіктің 'сүю' батырмасын басты! ✨\nУақыты: ${now}\nСтикер нөмірі: ${kissIndex + 1}`;
 
     const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
 
